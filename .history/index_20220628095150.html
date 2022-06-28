@@ -33,10 +33,10 @@
             border-radius: 4px
         }
 
-        span {
+        img::after {
             position: absolute;
             display: block;
-            content: attr(data-value);
+            content:  attr(data-value);
             left: 24px;
             bottom: 24px;
             width: 50px;
@@ -86,7 +86,6 @@
 
                 let img = document.createElement('img');
                 img.src = response.url;
-                // img.setAttribute('data-value', counter)
 
                 let counterElement = document.createElement('span');
                 counterElement.innerText = `${++counter}`
