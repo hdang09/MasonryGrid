@@ -70,25 +70,34 @@
     <div id="root"></div>
 
     <script>
-        let root = document.getElementById('root');
-
+        const root = document.getElementById('root');
         let counter = 0;
+
         setInterval(() => {
             async function fetchApi() {
-                let height = Math.floor(Math.random() * (900 - 300) + 300)
+                // Get API
                 let response = await fetch('https://picsum.photos/1080');
 
-                let div = document.createElement('div');
-                div.style.setProperty('--row-span', Math.ceil((height + 8)/(1+8)))
+                // Get random height
+                let height = Math.floor(Math.random() * (900 - 300) + 300)
 
+                // Create div element include: img and span
+                let div = document.createElement('div');
+                div.style.setProperty('--row-span', Math.ceil((height + 8)/(1 + 8))) // 1: grid-auto-rows, 8: grid-gap (From #root CSS)
+
+                // Create img tag
                 let img = document.createElement('img');
                 img.src = response.url;
                 img.style.height =  `${height}px`
 
+                // create span tag (to count the number of images)
                 let counterElement = document.createElement('span');
                 counterElement.innerText = `${++counter}`
 
+                // Append img and span into div element
                 div.append(img, counterElement)
+
+                // Append div element into #root
                 root.appendChild(div);
             }
             fetchApi();
