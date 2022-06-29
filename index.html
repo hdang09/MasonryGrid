@@ -5,44 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masonry Grid</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
         ::-webkit-scrollbar {
             display: none;
         }
 
         #root {
             padding: 16px;
-            /* display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: masonry; */
+            display: grid;
+            grid-gap: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-auto-rows: 1px;
         }
 
         div {
             position: relative;
-            display: inline-block;
-
+            grid-row-end: span var(--row-span, 200);
         }
         
         img {
             width: 100%;
+            height: 100%;
             padding: 10px;
             animation: appear 0.5s cubic-bezier(0, 0, 0.2, 1);
-            /* animation-delay: 0.5s; */
-            border-radius: 4px
+            border-radius: 4px;
+            object-fit: cover;
         }
 
         span {
-            position: absolute;
-            display: block;
-            content: attr(data-value);
+            position: absolute; 
             left: 24px;
-            bottom: 24px;
+            bottom: 10px;
             width: 50px;
             height: 50px;
             background-color: rgba(255, 255, 255, 0.5);
-            /* transition-delay: 1s; */
             backdrop-filter: blur(10px);
             border-radius: 4px;
             display: flex;
@@ -69,24 +69,21 @@
 <body>
     <div id="root"></div>
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script>
         let root = document.getElementById('root');
 
         let counter = 0;
         setInterval(() => {
             async function fetchApi() {
+                let height = Math.floor(Math.random() * (900 - 300) + 300)
                 let response = await fetch('https://picsum.photos/1080');
 
-                console.log(response);
-
                 let div = document.createElement('div');
-                div.className = 'col-sm-12 col-md-6 col-lg-4 col-xl-3'
+                div.style.setProperty('--row-span', Math.ceil((height + 8)/(1+8)))
 
                 let img = document.createElement('img');
                 img.src = response.url;
-                // img.setAttribute('data-value', counter)
+                img.style.height =  `${height}px`
 
                 let counterElement = document.createElement('span');
                 counterElement.innerText = `${++counter}`
