@@ -8,13 +8,14 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
         }
         
         ::-webkit-scrollbar {
             display: none;
         }
 
-        #root {
+        #root { 
             padding: 16px;
             display: grid;
             grid-gap: 8px;
@@ -29,8 +30,6 @@
         
         img {
             width: 100%;
-            height: 100%;
-            padding: 10px;
             animation: appear 0.5s cubic-bezier(0, 0, 0.2, 1);
             border-radius: 4px;
             object-fit: cover;
@@ -38,8 +37,8 @@
 
         span {
             position: absolute; 
-            left: 24px;
-            bottom: 10px;
+            left: 20px;
+            bottom: 24px;
             width: 50px;
             height: 50px;
             background-color: rgba(255, 255, 255, 0.5);
@@ -90,14 +89,14 @@
                 img.src = response.url;
                 img.style.height =  `${height}px`
 
-                // create span tag (to count the number of images)
-                let counterElement = document.createElement('span');
-                counterElement.innerText = `${++counter}`
+                // Create span tag (to count the number of images)
+                let span = document.createElement('span');
+                span.innerText = `${++counter}`
 
-                // Append img and span into div element
-                div.append(img, counterElement)
+                // Div element includes: img and span
+                div.append(img, span)
 
-                // Append div element into #root
+                // #root includes many div elements (1 div = 1 image)
                 root.appendChild(div);
             }
             fetchApi();
